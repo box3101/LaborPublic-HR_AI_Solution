@@ -5,6 +5,11 @@ import Labor from '@/components/Labor.vue';
 import Welcome from '@/components/Welcome.vue';  // 안내 페이지 컴포넌트
 import NotFound from '@/components/NotFound.vue'; // 404 컴포넌트 임포트
 
+// TODO 250707: 로그인 페이지 추가
+import Login from '@/components/Login.vue';
+import ForgotPassword from '@/components/ForgotPassword.vue';
+import Signup from '@/components/Signup.vue';
+
 //Vue와 VueRouter 연결
 Vue.use(VueRouter);
 
@@ -26,7 +31,12 @@ const routes = [
     name: 'PdfPopup',
     component: () => import('@/components/PdfViewer.vue')
   },
-  { path: '*', redirect: '/' }  // 정의되지 않은 경로는 안내 페이지로 리다이렉트
+  { path: '*', redirect: '/' },  // 정의되지 않은 경로는 안내 페이지로 리다이렉트
+
+  // TODO 250707: 로그인 페이지 추가
+  { path: '/login', name: 'Login', component: Login },
+  { path: '/forgot-password', name: 'ForgotPassword', component: ForgotPassword },
+  { path: '/signup', name: 'Signup', component: Signup },
 ];
 
 //VueRouter에 route를 등록하고 설정한다.

@@ -6,8 +6,8 @@ export const config = {
   env: runtimeEnv.ENV || 'local',
 
   // API Base URL
-  //apiBaseUrl: 'http://dev.strategygate.biz:8885' || 'http://localhost:8082',
-  apiBaseUrl: 'http://localhost:8083' || 'http://localhost:8083',
+  apiBaseUrl: 'http://dev.strategygate.biz:8885' || 'http://localhost:8082',
+  // apiBaseUrl: 'http://localhost:8083' || 'http://localhost:8083',
 
   // 환경별 설정
   isLocal: runtimeEnv.ENV === 'local',

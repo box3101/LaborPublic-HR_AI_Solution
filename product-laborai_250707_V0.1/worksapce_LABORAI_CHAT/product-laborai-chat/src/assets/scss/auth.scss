@@ -1,0 +1,917 @@
+// ===================================
+// 통합 인증 페이지 스타일 (auth.scss)
+// ===================================
+
+// 공통 변수 및 믹스인
+$primary-color: #2d5a5a;
+$primary-hover: #234848;
+$primary-active: #1a3636;
+$secondary-color: #5a9aa0;
+$text-color: #4a5568;
+$text-muted: #666;
+$text-light: #999;
+$bg-color: #e5e5e5;
+$input-bg: #f8f9fa;
+$border-color: #e2e8f0;
+$border-light: #ddd;
+$focus-color: #4299e1;
+$success-color: #10b981;
+$success-bg: #f0fdf4;
+$success-border: #bbf7d0;
+
+// 공통 폰트 패밀리
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+// 믹스인
+@mixin input-focus {
+  outline: none;
+  border-color: $focus-color;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+@mixin button-hover($bg-color) {
+  background: $bg-color;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 90, 90, 0.3);
+}
+
+@mixin fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+// 키프레임 애니메이션
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// 공통 페이지 레이아웃
+// ===================================
+.auth-page {
+  min-height: 100vh;
+  background-color: $bg-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: $font-family;
+
+  .auth-card {
+    background: white;
+    border-radius: 16px;
+    padding: 60px 48px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+
+    // 제목 스타일
+    .auth-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: $text-color;
+      text-align: center;
+      margin: 0 0 48px 0;
+      letter-spacing: 2px;
+    }
+
+    // 설명 텍스트
+    .auth-description {
+      font-size: 16px;
+      color: $text-muted;
+      text-align: center;
+      line-height: 1.6;
+      margin: 0 0 48px 0;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    // 폼 그룹
+    .form-group {
+      margin-bottom: 24px;
+
+      &:last-of-type {
+        margin-bottom: 32px;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 16px;
+        color: $text-muted;
+        margin-bottom: 12px;
+        font-weight: 500;
+
+        .optional {
+          color: $text-light;
+          font-weight: 400;
+          font-size: 13px;
+        }
+      }
+
+      .form-input {
+        width: 100%;
+        height: 56px;
+        padding: 0 18px;
+        border: 1px solid $border-color;
+        border-radius: 12px;
+        font-size: 16px;
+        color: #2d3748;
+        background: $input-bg;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+
+        &:focus {
+          @include input-focus;
+        }
+
+        &::placeholder {
+          color: #a0aec0;
+        }
+      }
+
+      .form-select {
+        width: 100%;
+        height: 56px;
+        padding: 0 18px;
+        border: 1px solid $border-color;
+        border-radius: 12px;
+        font-size: 16px;
+        color: #2d3748;
+        background: $input-bg;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+
+        &:focus {
+          @include input-focus;
+        }
+      }
+
+      // 비밀번호 필드
+      .password-field {
+        position: relative;
+
+        .form-input {
+          padding-right: 60px;
+        }
+
+        .password-toggle {
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 8px;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #f1f5f9;
+          }
+
+          svg {
+            display: block;
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+
+    // 기본 버튼
+    .auth-btn {
+      width: 100%;
+      height: 56px;
+      background: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 24px 0 32px 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(45, 90, 90, 0.2);
+
+      &:hover {
+        @include button-hover($primary-hover);
+      }
+
+      &:active {
+        background: $primary-active;
+        transform: translateY(0);
+      }
+    }
+
+    // 하단 링크
+    .auth-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+
+      a {
+        font-size: 16px;
+        color: $text-color;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        padding: 8px 16px;
+        border-radius: 8px;
+
+        &:hover {
+          color: $primary-color;
+          text-decoration: underline;
+          background-color: $input-bg;
+        }
+      }
+
+      .primary-link {
+        font-weight: 600;
+      }
+
+      .secondary-link {
+        font-weight: 400;
+      }
+
+      .auth-text {
+        font-size: 16px;
+        color: $text-muted;
+      }
+    }
+  }
+}
+
+// ===================================
+// 로그인 페이지 특화 스타일
+// ===================================
+.login-page {
+  @extend .auth-page;
+
+  .login-card {
+    @extend .auth-card;
+
+    .login-title {
+      @extend .auth-title;
+    }
+
+    .login-btn {
+      @extend .auth-btn;
+    }
+
+    .login-links {
+      @extend .auth-links;
+
+      .signup-link {
+        @extend .primary-link;
+      }
+
+      .forgot-link {
+        @extend .secondary-link;
+      }
+    }
+  }
+}
+
+// ===================================
+// 비밀번호 찾기 페이지 특화 스타일
+// ===================================
+.forgot-password-page {
+  @extend .auth-page;
+
+  .forgot-password-card {
+    @extend .auth-card;
+
+    .forgot-title {
+      @extend .auth-title;
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+    }
+
+    .forgot-description {
+      @extend .auth-description;
+    }
+
+    .send-btn {
+      @extend .auth-btn;
+      margin: 0 0 32px 0;
+    }
+
+    .success-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: $success-bg;
+      border: 1px solid $success-border;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      @include fade-in;
+
+      span {
+        font-size: 16px;
+        color: $success-color;
+        font-weight: 500;
+      }
+
+      svg {
+        flex-shrink: 0;
+      }
+    }
+
+    .forgot-links {
+      @extend .auth-links;
+      gap: 12px;
+
+      .remember-text {
+        @extend .auth-text;
+      }
+
+      .signin-link {
+        font-weight: 600;
+        color: $primary-color;
+
+        &:hover {
+          color: $primary-hover;
+        }
+      }
+    }
+  }
+}
+
+// ===================================
+// 회원가입 페이지 특화 스타일
+// ===================================
+.signup-page {
+  @extend .auth-page;
+
+  .signup-card {
+    @extend .auth-card;
+    max-width: 600px;
+    padding: 20px 48px;
+
+    .signup-title {
+      @extend .auth-title;
+      font-size: 32px;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+
+      .form-label {
+        font-size: 14px;
+        margin-bottom: 8px;
+        word-break: keep-all;
+      }
+
+      .form-input, .form-select {
+        height: 44px;
+        padding: 0 12px;
+        border: 1px solid $border-light;
+        border-radius: 4px;
+        font-size: 14px;
+        background: $input-bg;
+
+        &:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+        }
+      }
+
+      // 3개 필드를 한 줄에 배치
+      &.flex-3 {
+        display: flex;
+        gap: 12px;
+
+        .form-group {
+          flex: 1;
+          margin-bottom: 0;
+        }
+      }
+
+      // 이메일 3단 분리
+      .email-3part {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .email-part {
+          flex: 1;
+          height: 44px;
+          padding: 0 12px;
+          border: 1px solid $border-light;
+          border-radius: 4px;
+          font-size: 14px;
+          background: $input-bg;
+          box-sizing: border-box;
+
+          &:focus {
+            border-color: #007bff;
+            background: white;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+          }
+
+          &:first-child {
+            flex: 1.2;
+          }
+
+          &:nth-child(3) {
+            flex: 1.1;
+          }
+        }
+
+        .email-extension {
+          flex: 0.8;
+          height: 44px;
+          padding: 0 8px;
+          border: 1px solid $border-light;
+          border-radius: 4px;
+          font-size: 14px;
+          background: $input-bg;
+          cursor: pointer;
+
+          &:focus {
+            border-color: #007bff;
+            background: white;
+          }
+        }
+
+        .email-separator {
+          font-size: 16px;
+          font-weight: 600;
+          color: $text-muted;
+          flex-shrink: 0;
+        }
+      }
+
+      // 비밀번호 필드 (회원가입용)
+      .password-field {
+        .form-input {
+          padding-right: 48px;
+        }
+
+        .password-toggle {
+          right: 12px;
+          padding: 4px;
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+
+    .create-account-btn {
+      width: 100%;
+      height: 48px;
+      background: $secondary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #4a8a90;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        background: #3a7a80;
+        transform: translateY(0);
+      }
+    }
+
+    .forgot-links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+
+      .remember-text {
+        font-size: 16px;
+        color: $text-muted;
+      }
+
+      .signin-link {
+        font-size: 16px;
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: $primary-hover;
+          text-decoration: underline;
+          background-color: $input-bg;
+        }
+      }
+    }
+  }
+}
+
+// Flex 유틸리티 클래스
+.flex {
+  display: flex;
+
+  &.flex-3 {
+    gap: 12px;
+
+    .form-group {
+      flex: 1;
+      height: 56px;
+    }
+  }
+}
+
+// ===================================
+// 반응형 미디어 쿼리
+// ===================================
+
+// 태블릿 (768px 이하)
+@media (max-width: 768px) {
+  .auth-page {
+    padding: 16px;
+
+    .auth-card {
+      padding: 52px 36px;
+
+      .auth-title {
+        font-size: 26px;
+        margin-bottom: 40px;
+      }
+
+      .auth-description {
+        font-size: 15px;
+        margin-bottom: 44px;
+      }
+
+      .form-group {
+        margin-bottom: 22px;
+
+        .form-input, .form-select {
+          height: 54px;
+        }
+      }
+
+      .auth-btn {
+        height: 54px;
+        font-size: 17px;
+      }
+    }
+  }
+
+  .signup-page .signup-card {
+    padding: 32px 24px;
+    max-width: 100%;
+
+    .signup-title {
+      font-size: 22px;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+
+      .form-input, .form-select {
+        height: 42px;
+      }
+
+      .email-3part {
+        gap: 6px;
+
+        .email-part, .email-extension {
+          height: 42px;
+        }
+      }
+    }
+
+    .create-account-btn {
+      height: 46px;
+      font-size: 15px;
+    }
+  }
+}
+
+// 모바일 (600px 이하)
+@media (max-width: 600px) {
+  .auth-page {
+    .auth-card {
+      padding: 40px 28px;
+      max-width: 100%;
+
+      .auth-title {
+        font-size: 24px;
+        margin-bottom: 36px;
+      }
+
+      .auth-description {
+        font-size: 15px;
+        margin-bottom: 36px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+
+        .form-label {
+          font-size: 15px;
+        }
+
+        .form-input, .form-select {
+          height: 52px;
+          font-size: 15px;
+        }
+      }
+
+      .auth-btn {
+        height: 52px;
+        font-size: 17px;
+        margin: 22px 0 30px 0;
+      }
+
+      .auth-links {
+        a {
+          font-size: 15px;
+        }
+
+        .auth-text {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+
+  .signup-page .signup-card {
+    padding: 28px 20px;
+
+    .signup-title {
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+
+      .form-label {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      .form-input, .form-select {
+        height: 40px;
+        font-size: 13px;
+        padding: 0 10px;
+      }
+
+      .email-3part {
+        gap: 4px;
+
+        .email-part {
+          height: 40px;
+          padding: 0 8px;
+        }
+
+        .email-extension {
+          height: 40px;
+          padding: 0 6px;
+        }
+
+        .email-separator {
+          font-size: 14px;
+        }
+      }
+
+      .password-field {
+        .form-input {
+          padding-right: 44px;
+        }
+
+        .password-toggle {
+          right: 10px;
+
+          svg {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+    }
+
+    .create-account-btn {
+      height: 44px;
+      font-size: 15px;
+      margin-top: 20px;
+    }
+  }
+}
+
+// 소형 모바일 (480px 이하)
+@media (max-width: 480px) {
+  .auth-page {
+    .auth-card {
+      padding: 36px 24px;
+
+      .auth-title {
+        font-size: 22px;
+        margin-bottom: 32px;
+        letter-spacing: 1px;
+      }
+
+      .auth-description {
+        font-size: 14px;
+        margin-bottom: 32px;
+        line-height: 1.5;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+
+        .form-label {
+          font-size: 14px;
+          margin-bottom: 10px;
+        }
+
+        .form-input, .form-select {
+          height: 48px;
+          font-size: 14px;
+          padding: 0 16px;
+        }
+
+        .password-field {
+          .form-input {
+            padding-right: 54px;
+          }
+
+          .password-toggle {
+            right: 14px;
+            padding: 6px;
+
+            svg {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+
+      .auth-btn {
+        height: 48px;
+        font-size: 16px;
+        margin: 20px 0 28px 0;
+      }
+
+      .auth-links {
+        gap: 12px;
+
+        a {
+          font-size: 15px;
+          padding: 6px 12px;
+        }
+
+        .auth-text {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .signup-page .signup-card {
+    padding: 24px 16px;
+
+    .signup-title {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+
+      .form-input, .form-select {
+        height: 38px;
+        font-size: 12px;
+        padding: 0 8px;
+      }
+
+      // 3개 필드 세로 배치
+      &.flex-3 {
+        flex-direction: column;
+        gap: 8px;
+
+        .form-group {
+          margin-bottom: 8px;
+        }
+      }
+
+      .email-3part {
+        gap: 3px;
+
+        .email-part {
+          height: 38px;
+          padding: 0 6px;
+        }
+
+        .email-extension {
+          height: 38px;
+          padding: 0 5px;
+        }
+
+        .email-separator {
+          font-size: 13px;
+        }
+      }
+    }
+
+    .create-account-btn {
+      height: 42px;
+      font-size: 14px;
+    }
+  }
+}
+
+// 초소형 모바일 (360px 이하)
+@media (max-width: 360px) {
+  .auth-page {
+    padding: 12px;
+
+    .auth-card {
+      padding: 32px 20px;
+
+      .auth-title {
+        font-size: 20px;
+        margin-bottom: 28px;
+      }
+
+      .auth-description {
+        font-size: 13px;
+        margin-bottom: 28px;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+
+        .form-input, .form-select {
+          height: 46px;
+          font-size: 13px;
+          padding: 0 14px;
+        }
+
+        .password-field {
+          .form-input {
+            padding-right: 50px;
+          }
+
+          .password-toggle {
+            right: 12px;
+            padding: 4px;
+
+            svg {
+              width: 18px;
+              height: 18px;
+            }
+          }
+        }
+      }
+
+      .auth-btn {
+        height: 46px;
+        font-size: 15px;
+        margin: 18px 0 24px 0;
+      }
+
+      .auth-links {
+        gap: 10px;
+
+        a {
+          font-size: 14px;
+          padding: 5px 10px;
+        }
+
+        .auth-text {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
